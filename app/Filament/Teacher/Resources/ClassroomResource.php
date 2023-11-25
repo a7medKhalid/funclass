@@ -23,7 +23,9 @@ class ClassroomResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,7 +33,12 @@ class ClassroomResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('points'),
+                Tables\Columns\TextColumn::make('students.count')
+
             ])
             ->filters([
                 //
@@ -49,7 +56,7 @@ class ClassroomResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\StudentsRelationManager::make()
         ];
     }
 

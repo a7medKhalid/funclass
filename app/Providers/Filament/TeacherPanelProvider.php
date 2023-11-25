@@ -51,6 +51,8 @@ class TeacherPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->login()
+            ->registration();
     }
 }
