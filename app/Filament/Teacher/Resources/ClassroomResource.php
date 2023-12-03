@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use App\Filament\Teacher\Pages\Classroom as ClassroomPage;
 class ClassroomResource extends Resource
 {
     protected static ?string $model = Classroom::class;
@@ -49,6 +49,11 @@ class ClassroomResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+//                Tables\Actions\Action::make('start')
+//                ->label(__('Start'))
+//                ->icon('heroicon-o-play')
+//                ->url(fn (Classroom $classroom) => ClassroomPage::getUrl(['classroom' => $classroom])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -70,6 +75,7 @@ class ClassroomResource extends Resource
             'index' => Pages\ListClassrooms::route('/'),
             'create' => Pages\CreateClassroom::route('/create'),
             'edit' => Pages\EditClassroom::route('/{record}/edit'),
+            'view' => Pages\ViewClassroom::route('/{record}'),
         ];
     }
 }
