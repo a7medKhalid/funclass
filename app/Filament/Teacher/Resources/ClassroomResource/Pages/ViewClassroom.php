@@ -47,4 +47,9 @@ class ViewClassroom extends ViewRecord
 
         parent::mount($record);
     }
+
+    public function triggerConfetti()
+    {
+        $this->dispatchFormEvent('confetti');
+    }
 }

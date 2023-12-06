@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
             $switch
                 ->locales(['ar','en']); // also accepts a closure
         });
+
+        FilamentAsset::register([
+            Js::make('custom-script', __DIR__ . '/../../resources/js/custom.js'),
+        ]);
     }
 }
