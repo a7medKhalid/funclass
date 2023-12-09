@@ -18,24 +18,55 @@ class ViewClassroom extends ViewRecord
 
     public $students;
 
+    public $modalModel = null;
+
     public function increasePoints($studentId)
     {
         $student = Student::find($studentId);
+        $old_level = $student->level;
+
         $student->points += 1;
         $student->save();
 
+        $student = $student->fresh();
+        $new_level = $student->level;
+
+        if ($new_level > $old_level) {
+            $this->modalModel = $student;
+            $this->dispatch('open-modal', id: 'student-level-up');
+
+            $this->dispatchFormEvent('confetti');
+        }
+
+//        dd($student, $old_level, $new_level);
+
+
+        $old_level = $this->classroom->level;
         $this->classroom->points += 1;
         $this->classroom->save();
+
+        $new_level = $this->classroom->level;
+
+        if ($new_level > $old_level) {
+            $this->modalModel = $this->classroom;
+            $this->dispatch('open-modal', id: 'classroom-level-up');
+        }
+
     }
 
     public function decreasePoints($studentId)
     {
         $student = Student::find($studentId);
-        $student->points -= 1;
-        $student->save();
 
-        $this->classroom->points -= 1;
-        $this->classroom->save();
+        if ($student->points != 0) {
+
+
+            $student->points -= 1;
+            $student->save();
+
+            $this->classroom->points -= 1;
+            $this->classroom->save();
+        }
 
     }
 

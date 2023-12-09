@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,23 @@ class Student extends Model
     public function classrooms()
     {
         return $this->belongsToMany(Classroom::class, 'classroom_has_students');
+    }
+
+    //get level attribute
+    protected function level(): Attribute
+    {
+        return Attribute::make(
+            fn() =>  floor($this->points / 100) + 1
+        );
+    }
+
+    //get level progress attribute
+    protected function levelProgress(): Attribute
+    {
+        return Attribute::make(
+            fn() => $this->points % 100
+        );
+
     }
 
 }
