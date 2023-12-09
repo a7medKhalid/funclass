@@ -47,4 +47,11 @@ class Classroom extends Model
         return (($this->points % ((100 * $this->students->count()) / 2)) / ((100 * $this->students->count()) / 2)) * 100;
     }
 
+    protected function studentsCount(): Attribute
+    {
+        return Attribute::make(
+            fn() => $this->students->count()
+        );
+    }
+
 }

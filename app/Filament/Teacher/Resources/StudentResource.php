@@ -19,11 +19,22 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getLabel(): ?string
+    {
+        return __('teacher.Students');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('teacher.Students');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('teacher.Name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,9 +45,12 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('teacher.Name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('points'),
+                Tables\Columns\TextColumn::make('points')
+                    ->label(__('teacher.Points'))
+                    ->sortable(),
 
             ])
             ->filters([

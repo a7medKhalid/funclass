@@ -15,7 +15,7 @@
             <div class="rounded-full p-4 ">
                 <!-- Placeholder for the creature image -->
                 <div class="h-24 w-24 flex items-center justify-center">
-                    <img class="w-20" src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed={{$modalModel->name}}" alt="{{ $modalModel->name }}">
+                    <img class="w-20 rounded-full" src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed={{ $modalModel->name }}&eyes=happy&mouth=smile01" alt="{{ $modalModel->name }}">
                 </div>
             </div>
         </div>
@@ -96,8 +96,8 @@
                     <div class="flex justify-center p-4">
                         <div class="rounded-full p-4 ">
                             <!-- Placeholder for the creature image -->
-                            <div class="h-24 w-24 flex items-center justify-center">
-                                <img class="w-20" src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed={{$student->name}}" alt="{{ $student->name }}">
+                            <div class="h-24 w-24 flex items-center justify-center ">
+                                <img class="w-20 rounded-full" src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed={{ $student->name }}&eyes=happy&mouth=smile01" alt="{{ $student->name }}">
                             </div>
                         </div>
                     </div>
