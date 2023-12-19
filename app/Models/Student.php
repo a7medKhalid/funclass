@@ -27,11 +27,16 @@ class Student extends Model
         return $this->belongsToMany(Classroom::class, 'classroom_has_students');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_has_students');
+    }
+
     //get level attribute
     protected function level(): Attribute
     {
         return Attribute::make(
-            fn() =>  floor($this->points / 100) + 1
+            fn() =>  floor($this->points / 10) + 1
         );
     }
 
@@ -39,7 +44,7 @@ class Student extends Model
     protected function levelProgress(): Attribute
     {
         return Attribute::make(
-            fn() => $this->points % 100
+            fn() => (($this->points % 10) / 10) * 100 + 10
         );
 
     }

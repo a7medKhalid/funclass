@@ -32,19 +32,35 @@ class Classroom extends Model
         return $this->belongsToMany(Student::class, 'classroom_has_students');
     }
 
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
     //get level attribute
     protected function level(): Attribute
     {
+        $studentsCount = $this->students->count();
+        if ($studentsCount === 0) {
+            return Attribute::make(
+                fn() => 1
+            );
+        }
         return Attribute::make(
-            fn() => floor($this->points / ((100 * $this->students->count()) / 2)) + 1
+            fn() => floor($this->points / ((10 * $studentsCount) / 2)) + 1
         );
     }
 
     //get level progress attribute
     public function getLevelProgressAttribute(): float
     {
+        $studentsCount = $this->students->count();
 
-        return (($this->points % ((100 * $this->students->count()) / 2)) / ((100 * $this->students->count()) / 2)) * 100;
+        if ($studentsCount === 0) {
+            return 0;
+        }
+
+        return (($this->points % ((10 * $studentsCount) / 2)) / ((10 * $studentsCount) / 2)) * 100 + 10;
     }
 
     protected function studentsCount(): Attribute

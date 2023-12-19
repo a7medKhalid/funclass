@@ -35,7 +35,7 @@ class ClassroomResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label(__('Name'))
+                    ->label(__('teacher.Name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -75,7 +75,8 @@ class ClassroomResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl('');
     }
 
     public static function getRelations(): array
