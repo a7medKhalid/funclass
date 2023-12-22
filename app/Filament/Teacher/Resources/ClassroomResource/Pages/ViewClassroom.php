@@ -7,6 +7,7 @@ use App\Models\Classroom;
 use App\Models\Student;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Collection;
 
 class ViewClassroom extends ViewRecord
 {
@@ -16,7 +17,9 @@ class ViewClassroom extends ViewRecord
 
     public Classroom $classroom;
 
-    public $students;
+    public Collection $students;
+
+    public Collection $groups;
 
     public $modalModel = null;
 
@@ -24,6 +27,11 @@ class ViewClassroom extends ViewRecord
     {
         $student = Student::find($studentId);
         $old_level = $student->level;
+
+        $group = $student->groups()->where('classroom_id', $this->classroom->id)->first();
+        $old_group_level = $group->level ?? 0;
+
+
 
         $student->points += 1;
         $student->save();
@@ -52,6 +60,18 @@ class ViewClassroom extends ViewRecord
             $this->dispatch('open-modal', id: 'classroom-level-up');
         }
 
+        //check if group level up
+
+        if ($group) {
+            $group->refresh();
+            $new_level = $group->level;
+
+            if ($new_level > $old_group_level) {
+                $this->modalModel = $group;
+                $this->dispatch('open-modal', id: 'group-level-up');
+            }
+        }
+
     }
 
     public function decreasePoints($studentId)
@@ -74,7 +94,13 @@ class ViewClassroom extends ViewRecord
     {
         $this->classroom = Classroom::find($record);
 
-        $this->students = $this->classroom->students()->get();
+        if ($this->classroom->groups()->count() > 0) {
+            $this->groups = $this->classroom->groups()->with('students')->get();
+            $this->students = collect();
+        } else {
+            $this->students = $this->classroom->students()->get();
+            $this->groups = collect();
+        }
 
         parent::mount($record);
     }
