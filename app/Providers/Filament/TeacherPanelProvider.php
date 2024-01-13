@@ -52,6 +52,7 @@ class TeacherPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->login()
-            ->registration();
+            ->registration()
+            ->topNavigation();
     }
 }
