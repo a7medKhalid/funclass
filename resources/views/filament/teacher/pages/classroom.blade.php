@@ -95,7 +95,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-7 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 lg:grid-cols-5 gap-4">
         @forelse($students as $student)
             <x-student-card :student="$student" />
         @empty
