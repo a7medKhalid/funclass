@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Classroom;
 use App\Models\Student;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -13,7 +14,8 @@ class StudentCard extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public Student $student
+        public Student $student,
+        public Classroom $classroom,
     )
     {
         //

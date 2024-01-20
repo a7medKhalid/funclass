@@ -97,8 +97,11 @@
     </div>
     <div class="grid grid-cols-3 lg:grid-cols-5 gap-4">
         @forelse($students as $student)
-            <x-student-card :student="$student" />
-        @empty
+            <div class="@if($classroom->weekKing())@if($student->id === $classroom->weekKing()->id)  col-span-full @endif @endif">
+                <x-student-card :student="$student" :classroom="$classroom"
+                        />
+            </div>
+                @empty
             @foreach($groups as $group)
                     <!-- Group Header -->
                     <div class="mb-4 px-4 col-span-full">
@@ -115,7 +118,10 @@
                         </div>
                     </div>
                     @foreach($group->students as $student)
-                        <x-student-card :student="$student" />
+                        <div class="@if($classroom->weekKing())@if($student->id === $classroom->weekKing()->id)  col-span-full @endif @endif">
+                            <x-student-card :student="$student" :classroom="$classroom"
+                            />
+                        </div>
                     @endforeach
             <br>
             @endforeach

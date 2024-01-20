@@ -4,6 +4,7 @@ namespace App\Filament\Teacher\Resources\ClassroomResource\Pages;
 
 use App\Filament\Teacher\Resources\ClassroomResource;
 use App\Models\Classroom;
+use App\Models\Point;
 use App\Models\Student;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -46,8 +47,6 @@ class ViewClassroom extends ViewRecord
             $this->dispatchFormEvent('confetti');
         }
 
-//        dd($student, $old_level, $new_level);
-
 
         $old_level = $this->classroom->level;
         $this->classroom->points += 1;
@@ -72,6 +71,11 @@ class ViewClassroom extends ViewRecord
             }
         }
 
+        Point::create([
+            'student_id' => $student->id,
+            'classroom_id' => $this->classroom->id
+        ]);
+
     }
 
     public function decreasePoints($studentId)
@@ -94,12 +98,39 @@ class ViewClassroom extends ViewRecord
     {
         $this->classroom = Classroom::find($record);
 
+        $weekKing = $this->classroom->weekKing();
+
         if ($this->classroom->groups()->count() > 0) {
             $this->groups = $this->classroom->groups()->with('students')->get();
             $this->students = collect();
+
+            //put the week king at the top of the list
+            if ($weekKing) {
+                foreach ($this->groups as $group) {
+                    $isThisGroup = false;
+                    $group->students = $group->students->filter(
+                        function ($student) use ($weekKing, &$isThisGroup) {
+                            if ($student->id === $weekKing->id) {
+                                $isThisGroup = true;
+                                return false;
+                            }
+                            return true;
+                        }
+                    );
+                    if ($isThisGroup) {
+                        $group->students->prepend($weekKing);
+                    }
+                }
+            }
         } else {
             $this->students = $this->classroom->students()->get();
             $this->groups = collect();
+
+            //put the week king at the top of the list
+            if ($weekKing) {
+                $this->students = $this->students->filter(fn ($student) => $student->id != $weekKing->id);
+                $this->students->prepend($weekKing);
+            }
         }
 
         parent::mount($record);

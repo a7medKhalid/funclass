@@ -37,6 +37,20 @@ class Classroom extends Model
         return $this->hasMany(Group::class);
     }
 
+    //week king
+    public function weekKing()
+    {
+        $start_date = date('Y-m-d', strtotime('last sunday - 8 days'));
+        $end_date = date('Y-m-d', strtotime($start_date . ' + 9 days'));
+
+        $student_id = Point::where('classroom_id', $this->id)
+            ->whereBetween('created_at', [$start_date, $end_date])
+            ->pluck('student_id')
+            ->groupBy(fn ($item) => $item)->sortDesc()->keys()->first();
+
+        return Student::find($student_id);
+    }
+
     //get level attribute
     protected function level(): Attribute
     {

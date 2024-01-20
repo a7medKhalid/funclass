@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -30,6 +31,11 @@ class Student extends Model
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_has_students');
+    }
+
+    public function points(): HasMany
+    {
+        return $this->hasMany(Point::class);
     }
 
     //get level attribute
