@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -38,6 +39,11 @@ class Student extends Model
         return $this->hasMany(Point::class);
     }
 
+    public function avatar(): HasOne
+    {
+        return $this->hasOne(Avatar::class);
+    }
+
     //get level attribute
     protected function level(): Attribute
     {
@@ -53,6 +59,14 @@ class Student extends Model
             fn() => (($this->points % 10) / 10) * 100 + 10
         );
 
+    }
+
+    public static function created($callback)
+    {
+        //create avatar
+        static::created(function ($student) {
+            $student->avatar()->create();
+        });
     }
 
 }

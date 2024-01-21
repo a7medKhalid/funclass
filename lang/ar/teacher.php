@@ -13,4 +13,6 @@ return [
     'CongratulationsLevelUpGroup' => 'تهانينا! لقد وصلتم إلى المستوى',
     'Groups' => 'المجموعات',
     'Group' => 'المجموعة',
+    'GetGift' => 'احصل على الجائزة',
+    'GiftCongratulation' => 'تهانينا! لقد حصلت على الجائزة',
 ];

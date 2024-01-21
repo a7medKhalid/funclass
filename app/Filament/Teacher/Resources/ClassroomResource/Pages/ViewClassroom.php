@@ -2,6 +2,9 @@
 
 namespace App\Filament\Teacher\Resources\ClassroomResource\Pages;
 
+use App\Enums\Avatar\BackgroundTypeEnum;
+use App\Enums\Avatar\EyesEnum;
+use App\Enums\Avatar\MouthEnum;
 use App\Filament\Teacher\Resources\ClassroomResource;
 use App\Models\Classroom;
 use App\Models\Point;
@@ -94,10 +97,39 @@ class ViewClassroom extends ViewRecord
 
     }
 
-    public function mount(Classroom|string|int $record): void
-    {
-        $this->classroom = Classroom::find($record);
+    public function getGift(Student $student): void {
+        $this->dispatch('open-modal', id: 'get-gift');
 
+        //get random gift
+        $giftTypes = [EyesEnum::cases(), MouthEnum::cases(), BackgroundTypeEnum::cases() ];
+
+        $giftTypeRand = rand(0, count($giftTypes) - 1);
+        $giftType = $giftTypes[$giftTypeRand];
+
+        $gift = $giftType[rand(0, count($giftType) - 1)];
+
+        $avatar = $student->avatar;
+
+        if ($giftTypeRand == 0) {
+            $avatar->eyes = $gift;
+        } else if ($giftTypeRand == 1) {
+            $avatar->mouth = $gift;
+        } else {
+            $avatar->background_type = $gift;
+        }
+
+        $avatar->save();
+
+        $this->dispatchFormEvent('confetti');
+
+        $this->dispatch('close-modal', id: 'student-level-up');
+
+        //update students state
+        $this->getStudents();
+    }
+
+    private function getStudents(): void
+    {
         $weekKing = $this->classroom->weekKing();
 
         if ($this->classroom->groups()->count() > 0) {
@@ -132,6 +164,13 @@ class ViewClassroom extends ViewRecord
                 $this->students->prepend($weekKing);
             }
         }
+    }
+
+    public function mount(Classroom|string|int $record): void
+    {
+        $this->classroom = Classroom::find($record);
+
+        $this->getStudents();
 
         parent::mount($record);
     }
