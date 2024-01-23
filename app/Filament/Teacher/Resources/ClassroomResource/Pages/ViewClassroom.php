@@ -40,8 +40,10 @@ class ViewClassroom extends ViewRecord
                         $student = $record->students()->inRandomOrder()->first();
                         $this->dispatch('open-modal', id: 'random-student');
                         $this->modalModel = $student;
+                        $this->getStudents();
+
                     }
-                )
+                ),
         ];
     }
 
@@ -97,6 +99,8 @@ class ViewClassroom extends ViewRecord
             'classroom_id' => $this->classroom->id
         ]);
 
+        $this->getStudents();
+
     }
 
     public function decreasePoints($studentId)
@@ -115,7 +119,8 @@ class ViewClassroom extends ViewRecord
 
     }
 
-    public function getGift(Student $student): void {
+    public function getGift(): void {
+        $student = $this->modalModel;
         $this->dispatch('open-modal', id: 'get-gift');
 
         //get random gift
@@ -146,8 +151,9 @@ class ViewClassroom extends ViewRecord
         $this->getStudents();
     }
 
-    private function getStudents(): void
+    private function getStudents($hello = null): void
     {
+
         $weekKing = $this->classroom->weekKing();
 
         if ($this->classroom->groups()->count() > 0) {
@@ -181,6 +187,10 @@ class ViewClassroom extends ViewRecord
                 $this->students = $this->students->filter(fn ($student) => $student->id != $weekKing->id);
                 $this->students->prepend($weekKing);
             }
+        }
+
+        if ($hello === 'hello'){
+            dd($this->students, $weekKing);
         }
     }
 

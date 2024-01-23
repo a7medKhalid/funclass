@@ -3,11 +3,11 @@
     <x-filament::modal id="random-student" >
         @if($modalModel)
             <!-- Card Header -->
-{{--            <div class="p-4 border-b">--}}
-{{--                <div class="text-center font-semibold text-xl text-gray-800">--}}
-{{--                    {{ __('teacher.RandomStudentChosen')}}--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="p-4 border-b">
+                <div class="text-center font-semibold text-xl text-gray-800">
+                    {{ __('teacher.RandomStudentChosen')}}
+                </div>
+            </div>
 
             <!-- Student Name -->
             <div class="flex justify-center p-4">
@@ -82,7 +82,7 @@
             </div>
 
             <!-- Get Gift Button -->
-            <x-filament::button wire:click="getGift({{ $modalModel  }})" icon="heroicon-o-gift" icon-position="after" color="danger" >
+            <x-filament::button wire:click="getGift()" icon="heroicon-o-gift" icon-position="after" color="danger" >
                 {{ __('teacher.GetGift') }}
             </x-filament::button>
 
@@ -161,7 +161,7 @@
                 <x-student-card :student="$student" :classroom="$classroom"
                         />
             </div>
-                @empty
+        @empty
             @foreach($groups as $group)
                     <!-- Group Header -->
                     <div class="mb-4 px-4 col-span-full">
