@@ -1,5 +1,36 @@
 <x-filament-panels::page>
 
+    <x-filament::modal id="random-student" >
+        @if($modalModel)
+            <!-- Card Header -->
+{{--            <div class="p-4 border-b">--}}
+{{--                <div class="text-center font-semibold text-xl text-gray-800">--}}
+{{--                    {{ __('teacher.RandomStudentChosen')}}--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+            <!-- Student Name -->
+            <div class="flex justify-center p-4">
+                <div class="rounded-full p-4 ">
+                    <div class="text-center font-semibold text-xl text-gray-800">
+                        {{ $modalModel->name }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Image -->
+            <div class="flex justify-center p-4">
+                <div class="rounded-full p-4 ">
+                    <!-- Placeholder for the creature image -->
+                    <div class="h-24 w-24 flex items-center justify-center">
+                        <x-avatar :student="$modalModel" />
+                    </div>
+                </div>
+            </div>
+
+        @endif
+    </x-filament::modal>
+
     <x-filament::modal id="get-gift" >
         @if($modalModel)
             <!-- Card Header -->

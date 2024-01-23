@@ -10,6 +10,7 @@ use App\Models\Classroom;
 use App\Models\Point;
 use App\Models\Student;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Collection;
 
@@ -26,6 +27,23 @@ class ViewClassroom extends ViewRecord
     public Collection $groups;
 
     public $modalModel = null;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('randomStudent')
+                ->icon('fontaudio-random-1dice')
+                ->iconPosition('after')
+                ->label(__('teacher.ChooseRandomStudent'))
+                ->action(
+                    function (Classroom $record) {
+                        $student = $record->students()->inRandomOrder()->first();
+                        $this->dispatch('open-modal', id: 'random-student');
+                        $this->modalModel = $student;
+                    }
+                )
+        ];
+    }
 
     public function increasePoints($studentId)
     {

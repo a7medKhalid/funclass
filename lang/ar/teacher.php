@@ -15,4 +15,6 @@ return [
     'Group' => 'المجموعة',
     'GetGift' => 'احصل على الجائزة',
     'GiftCongratulation' => 'تهانينا! لقد حصلت على الجائزة',
+    'RandomStudentChosen' => 'تم اختيار طالب عشوائي',
+    'ChooseRandomStudent' => 'اختر طالب عشوائيا',
 ];
