@@ -44,7 +44,7 @@
 
 
     <!-- Features -->
-    <div class="flex justify-center items-center bg-orange-100 w-screen h-screen">
+    <div class="flex justify-center items-center bg-orange-100 md:h-screen">
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
             <!-- Avatar Feature -->
@@ -52,7 +52,7 @@
 
                 <img class="w-12 mb-4 rounded-full" src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Emmie Jakubowski&eyes=sensor&mouth=grill03&backgroundType=gradientLinear" />
                 <div class="font-bold text-2xl text-center ">شخصية متفردة </div>
-                <div class="text-center text-xl ">كل طالب لديه شخصية بشكل مميز يمكنه تحسينها بجمع النقاط </div>
+                <div class="text-center text-xl ">كل طالب لديه شخصية متفردة يمكنه تحسينها بجمع النقاط </div>
 
             </div>
 
@@ -103,7 +103,7 @@
                 <div class="font-bold text-2xl text-center ">
                     الفصول والمجموعات
                 </div>
-                <div class="text-center text-xl "> يمكنك انشاء عدة فصول وكل فصل من الممكن أن يقسم الى مجموعات كل مجموعة وفصل يمنح نقاط ومستويات بناء على تميز الطلاب </div>
+                <div class="text-center text-xl "> يمكنك انشاء عدة فصول وكل فصل من الممكن أن يقسم الى مجموعات ولكل مجموعة وفصل نقاط ومستويات بناء على تميز الطلاب </div>
 
             </div>
 
@@ -111,8 +111,13 @@
             <div class="flex flex-col items-center bg-orange-50 rounded-2xl p-8  ">
 
                 @svg('fontaudio-random-1dice', ['class' => 'w-12 mb-4 text-orange-500'])
-                <div class="font-bold text-2xl text-center ">أدوات مساعدة </div>
-                <div class="text-center ">يتم بشكل دوري اضافة ادوات جديدة على المنصة تساعد على إدارة الصف مثل اختيار طالب عشوائيا, تحدي القمة والمزيد </div>
+
+                <div class="font-bold text-2xl text-center ">
+                    أدوات مساعدة
+                    </div>
+                <div class="text-center text-xl ">
+                    يتم بشكل دوري اضافة ادوات جديدة على المنصة تساعد على إدارة الصف مثل اختيار طالب عشوائيا, تحدي القمة والمزيد
+                </div>
 
             </div>
         </div>
